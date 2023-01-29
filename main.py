@@ -110,18 +110,26 @@ def quiz():
             score += 1
         else:
             score_in_question = 0.0
-            for x in answer:
-                if x in truths:
-                    score_in_question += 1.0/len(truths)
+            s = 1.0/len(question.answers)
+            for x in range(len(question.answers)):
+                a = x+1
+                if a in answer:
+                    if a in truths:
+                        score_in_question += s
+                    else:
+                        score_in_question -= s
                 else:
-                    score_in_question -= 1.0/(len(question.answers) - len(truths))
+                    if a in truths:
+                        score_in_question -= s
+                    else:
+                        score_in_question += s
             if score_in_question > 0:
                 score += score_in_question
                 print("ŻLE! Poprawne odpowiedzi to: ", truths,
-                    "Ocena: ", score_in_question, "\n")
+                      "Ocena: ", score_in_question, "\n")
             else:
                 print("ŻLE! Poprawne odpowiedzi to: ", truths,
-                    "Ocena: ", 0, "\n")
+                      "Ocena: ", 0, "\n")
         if counter > length:
             break
     end = time.time()
